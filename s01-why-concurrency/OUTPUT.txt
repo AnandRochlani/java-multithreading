@@ -8,7 +8,7 @@ $ java Ideal.java
 one clerk    : 6000 ms
 three clerks : 2000 ms
 
-$ java Ledger.java   # re-captured 28 Sep after Upi -> Phone, dollars and generic bank names: 71 runs, elapsed 1618-1634 ms; this is the 1624 run
+$ java Ledger.java
 PHONE priya  $250              fee $  0.00
 CARD BANK A ****4321  $1299    fee $ 25.98
 CASH  $150                     fee $  0.00

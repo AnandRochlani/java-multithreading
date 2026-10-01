@@ -11,6 +11,25 @@ $ java FindDeadlock.java
 Meena is BLOCKED, waiting for a lock held by Tom
 Tom is BLOCKED, waiting for a lock held by Meena
 
+$ java NoImport.java
+NoImport.java:23: error: cannot find symbol
+    ThreadMXBean threads = ManagementFactory.getThreadMXBean();
+    ^
+  symbol:   class ThreadMXBean
+  location: class NoImport
+NoImport.java:23: error: cannot find symbol
+    ThreadMXBean threads = ManagementFactory.getThreadMXBean();
+                           ^
+  symbol:   variable ManagementFactory
+  location: class NoImport
+NoImport.java:29: error: cannot find symbol
+    for (ThreadInfo t : threads.getThreadInfo(stuck)) {
+         ^
+  symbol:   class ThreadInfo
+  location: class NoImport
+3 errors
+error: compilation failed
+
 $ java NoNap.java
 both clerks went home
 

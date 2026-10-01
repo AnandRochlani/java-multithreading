@@ -186,7 +186,7 @@ synchronized : count 20000000 in 231 ms; 44487066 looks at a live clerk: {RUNNAB
 $ java diagnostics/ThreeAtATime.java
 ten passengers served, never more than 3 at the windows at once
 
-$ java diagnostics/TreeCount.java
+$ java --add-opens java.base/java.util=ALL-UNNAMED diagnostics/TreeCount.java
 ten clerks : size() says 49897, nodes reachable 73877, distinct keys 73877, buckets 524288, tree buckets 0 (tree nodes 0), longest chain 4
 one thread : size() says 100000, nodes reachable 100000, distinct keys 100000, buckets 262144, tree buckets 0 (tree nodes 0), longest chain 5
 
