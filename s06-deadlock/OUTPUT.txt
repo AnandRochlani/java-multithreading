@@ -1,0 +1,79 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java AfterYou.java
+after one second: Meena is RUNNABLE, Tom is RUNNABLE
+CPU used: Meena 1013 ms, Tom 1013 ms
+the stamp changed hands 20957145 times
+tickets stamped: 0
+
+$ java FindDeadlock.java
+Meena is BLOCKED, waiting for a lock held by Tom
+Tom is BLOCKED, waiting for a lock held by Meena
+
+$ java NoNap.java
+both clerks went home
+
+$ java OneLine.java
+Meena: holds the cash key
+both clerks went home
+
+$ java TwoKeysFixed.java
+Meena: holds the cash key, wants the ledger key
+Meena: sold a ticket
+Tom: holds the cash key, wants the ledger key
+Tom: sold a ticket
+Meena: TERMINATED, Tom: TERMINATED
+both clerks went home
+
+$ java TwoKeysTry.java
+Tom: holds the ledger key, wants the cash key
+Meena: holds the cash key, wants the ledger key
+Tom: gave up on the cash key, putting the ledger key back
+Meena: gave up on the ledger key, putting the cash key back
+nobody is stuck
+
+$ java diagnostics/NapOutside.java
+Meena: holds the cash key, wants the ledger key
+Meena: sold a ticket
+Tom: holds the ledger key, wants the cash key
+Tom: sold a ticket
+Meena: TERMINATED, Tom: TERMINATED
+both clerks went home
+
+$ java diagnostics/NapOutsideQuiet.java
+Meena: sold a ticket
+Tom: sold a ticket
+Meena: TERMINATED, Tom: TERMINATED
+both clerks went home
+
+$ java diagnostics/OneLineSysout.java
+Meena: holds the cash key
+both clerks went home
+
+$ java diagnostics/OneLineWarm.java
+opening the counters
+Meena: holds the cash key
+both clerks went home
+
+$ java diagnostics/Retry.java
+Tom: attempt 1 failed, backing off
+Meena: attempt 1 failed, backing off
+Meena: attempt 2 failed, backing off
+Tom: sold a ticket on attempt 2
+Meena: sold a ticket on attempt 3
+
+$ java diagnostics/RetryRandom.java
+Meena: attempt 1 failed, backing off
+Tom: attempt 1 failed, backing off
+Tom: attempt 2 failed, backing off
+Meena: sold a ticket on attempt 2
+Tom: sold a ticket on attempt 3
+
+$ java diagnostics/UnlockNotHeld.java
+Exception in thread "main" java.lang.IllegalMonitorStateException
+	at java.base/java.util.concurrent.locks.ReentrantLock$Sync.tryRelease(ReentrantLock.java:176)
+	at java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer.release(AbstractQueuedSynchronizer.java:1100)
+	at java.base/java.util.concurrent.locks.ReentrantLock.unlock(ReentrantLock.java:495)
+	at UnlockNotHeld.main(UnlockNotHeld.java:4)
+(exit 1)

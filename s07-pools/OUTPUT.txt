@@ -1,0 +1,134 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java AwaitGate.java
+after 100 ms, all clerks gone home? false
+card 1 served
+card 2 served
+card 4 served
+card 3 served
+after waiting up to 5 s more, all clerks gone home? true
+
+$ java CachedFlood.java
+[0.494s][warning][os,thread] Failed to start thread "Unknown thread" - pthread_create failed (EAGAIN) for attributes: stacksize: 2048k, guardsize: 16k, detached.
+[0.494s][warning][os,thread] Failed to start the native thread for java.lang.Thread "pool-1-thread-4065"
+handed in 4064 cards, then card 4065 got:
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+
+$ java CachedIdle.java
+card ran on pool-1-thread-1
+main is finished
+JVM exiting after 60008 ms                     (60003, 60008, 60012, 60012, 60014 ms)
+
+$ java CloseWaits.java
+all six handed in after 0 ms
+card 1 served by pool-1-thread-1
+card 2 served by pool-1-thread-2
+card 3 served by pool-1-thread-3
+card 6 served by pool-1-thread-2
+card 5 served by pool-1-thread-1
+card 4 served by pool-1-thread-3
+the try block is over after 420 ms
+
+$ java Closed.java
+Exception in thread "main" java.util.concurrent.RejectedExecutionException: Task Closed$$Lambda/0x000000f0011f9800@25a65b77 rejected from java.util.concurrent.ThreadPoolExecutor@214b199c[Shutting down, pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2015)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:787)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1328)
+	at Closed.main(Closed.java:8)
+card 1 served
+
+$ java CpuBound.java
+cores on this machine: 10
+pool of   1:  5494 ms
+pool of   4:  1537 ms
+pool of  10:   784 ms
+pool of 200:   779 ms
+checksum -2386788838375641973
+
+$ java CrashingCard.java
+card 1 served by pool-1-thread-1
+Exception in thread "pool-1-thread-1" java.lang.IllegalStateException: card 2 is torn
+	at CrashingCard.lambda$main$0(CrashingCard.java:7)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1527)
+card 3 served by pool-1-thread-2
+card 4 served by pool-1-thread-2
+
+$ java FirstPool.java
+main: all six cards handed in
+card 1 served by pool-1-thread-1
+card 3 served by pool-1-thread-3
+card 2 served by pool-1-thread-2
+card 5 served by pool-1-thread-3
+card 4 served by pool-1-thread-1
+card 6 served by pool-1-thread-2
+
+$ java NoShutdown.java
+main is finished
+card ran on pool-1-thread-1
+
+$ java OneClerkEach.java
+[0.409s][warning][os,thread] Failed to start thread "Unknown thread" - pthread_create failed (EAGAIN) for attributes: stacksize: 2048k, guardsize: 16k, detached.
+[0.409s][warning][os,thread] Failed to start the native thread for java.lang.Thread "clerk-4065"
+hired 4064 clerks, then passenger 4065 got:
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+
+$ java PoolSizes.java
+cores on this machine: 10
+pool of   4:  5377 ms
+pool of  10:  2155 ms
+pool of  25:   872 ms
+pool of  50:   439 ms
+pool of 200:   114 ms
+
+$ java RawClerks.java
+card 50 served by Thread-49
+card 100 served by Thread-99
+card 200 served by Thread-199
+card 150 served by Thread-149
+200 cards with a clerk each took 117 ms
+
+$ java Roster200.java
+card 50 served by pool-1-thread-4
+card 100 served by pool-1-thread-2
+card 150 served by pool-1-thread-4
+card 200 served by pool-1-thread-2
+200 cards on a roster of 4 took 5391 ms
+
+$ java ShutdownNow.java
+shutdownNow handed back 4 cards that never started
+card 2 interrupted after 110 ms
+card 1 interrupted after 110 ms
+all clerks gone home? true
+
+$ java SilentCard.java
+card 1 served by pool-1-thread-1
+card 3 served by pool-1-thread-1
+card 4 served by pool-1-thread-1
+
+$ java Stuck.java
+card handed in
+
+$ java ThreadAsCard.java
+getName() says window-9, but I run on pool-1-thread-1
+window-9 is NEW, alive: false
+
+$ java ThreeFactories.java
+cores on this machine: 10
+fixed(4):  [pool-1-thread-2, pool-1-thread-4, pool-1-thread-1, pool-1-thread-3, pool-1-thread-2, pool-1-thread-4]
+single:    [pool-2-thread-1, pool-2-thread-1, pool-2-thread-1, pool-2-thread-1, pool-2-thread-1, pool-2-thread-1]
+cached:    [pool-3-thread-3, pool-3-thread-5, pool-3-thread-2, pool-3-thread-6, pool-3-thread-1, pool-3-thread-4]
+
+$ java TrayOfCards.java
+after 2.5 seconds: 20 passengers served
+clerks on the roster: 10
+cards waiting in the tray: 4970
+the tray is a LinkedBlockingQueue
+threads in this JVM: 16 (peak 16)
+sent home with 4970 cards never started
+
+$ java WithShutdown.java
+main is finished
+card ran on pool-1-thread-1

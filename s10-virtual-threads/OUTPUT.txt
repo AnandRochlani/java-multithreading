@@ -1,0 +1,131 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java AlwaysDaemon.java
+platform thread: isVirtual false, isDaemon false
+virtual thread:  isVirtual true, isDaemon true
+setDaemon(false) on a virtual thread: java.lang.IllegalArgumentException: 'false' not legal for virtual threads
+
+$ java Carriers.java
+cores: 10
+10000 virtual threads ran on 10 carrier threads
+woke up on a different carrier than they fell asleep on: 9025 of 10000
+
+$ java CpuVirtual.java
+round 1: pool of 10 802 ms, virtual threads 807 ms
+round 2: pool of 10 852 ms, virtual threads 798 ms
+round 3: pool of 10 777 ms, virtual threads 784 ms
+checksum 347844441016011561
+
+$ java NobodyWaits.java
+main is finished
+
+$ java Pinned.java
+1000 naps of 100 ms inside synchronized took 110 ms
+
+$ java PlatformMillion.java
+[0.470s][warning][os,thread] Failed to start thread "Unknown thread" - pthread_create failed (EAGAIN) for attributes: stacksize: 2048k, guardsize: 16k, detached.
+[0.470s][warning][os,thread] Failed to start the native thread for java.lang.Thread "Thread-4065"
+hired 4065 platform threads in 246 ms, then:
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+
+$ java PooledVirtual.java
+200 cards on a pool of 4 virtual threads took 5226 ms
+
+$ java Roster200Virtual.java
+card 200 served by
+card 150 served by
+card 100 served by
+card 50 served by
+200 cards on virtual threads took 111 ms
+
+$ java RushHour.java
+handed in 1000000 cards after 375 ms
+1000000 passengers served after 5260 ms
+
+$ java ThreadCost.java virtual 1000000
+1000000 virtual threads started in 317 ms, all asleep
+resident memory: 101 MB before, 1012 MB now
+heap in use after a GC: 663 MB
+OS threads in this process: 46
+
+$ java ThreadLocalCost.java pool
+pool of 10: 1000000 cards, buffers made: 10, 104 ms
+
+$ java ThreeWays.java
+startVirtualThread: VirtualThread[#33]/runnable@ForkJoinPool-1-worker-1  isVirtual true, name ""
+ofVirtual: VirtualThread[#35,clerk-1]/runnable@ForkJoinPool-1-worker-2  isVirtual true, name "clerk-1"
+the executor: VirtualThread[#37]/runnable@ForkJoinPool-1-worker-1  isVirtual true, name ""
+
+$ java VirtualNoClose.java
+main is finished
+task ran on []
+
+$ java WhoServed.java
+card 200 served by VirtualThread[#238]/runnable@ForkJoinPool-1-worker-8
+card 50 served by VirtualThread[#84]/runnable@ForkJoinPool-1-worker-3
+card 100 served by VirtualThread[#135]/runnable@ForkJoinPool-1-worker-6
+card 150 served by VirtualThread[#187]/runnable@ForkJoinPool-1-worker-10
+
+$ java diagnostics/PinnedClassic.java
+Java 21: 1000 naps of 100 ms inside synchronized took 10399 ms
+
+$ java diagnostics/PlatformWaits.java
+main is finished
+the platform clerk served the card
+
+$ java diagnostics/RushHourTenThousand.java
+handed in 10000 cards after 22 ms
+10000 passengers served after 1041 ms
+
+$ java diagnostics/RushHourTimeline.java
+handed in 1000000 cards after 396 ms
+last card fell asleep at 467 ms
+first card woke up at    1009 ms
+last card woke up at     5478 ms
+1000000 passengers served after 5478 ms
+
+$ java diagnostics/SleepOneSecond.java
+platform sleep(1000): 1005.1 ms
+platform sleep(1000): 1005.0 ms
+platform sleep(1000): 1005.0 ms
+platform sleep(1000): 1005.0 ms
+platform sleep(1000): 1001.1 ms
+virtual  sleep(1000): 1001.5 ms
+virtual  sleep(1000): 1005.1 ms
+virtual  sleep(1000): 1005.2 ms
+virtual  sleep(1000): 1004.1 ms
+virtual  sleep(1000): 1004.3 ms
+
+$ java diagnostics/SlipsVirtual.java
+8 lookups of 100 ms on virtual threads took 111 ms
+
+$ java diagnostics/StillPinned.java
+1000 ordinary naps of 100 ms took 110 ms, while another card napped inside a class initializer
+
+$ java diagnostics/TenAtATime.java
+200 cards, at most 10 at the server at once, took 2087 ms
+
+$ java diagnostics/ThreadLocalNone.java
+no ThreadLocal: while the cards sleep, heap in use after a GC: 691 MB
+
+$ java -Djdk.traceVirtualThreadLocals=true diagnostics/TraceLocals.java
+VirtualThread[#33]/runnable@ForkJoinPool-1-worker-1
+    java.base/java.lang.ThreadLocal.setInitialValue(ThreadLocal.java:214)
+    java.base/java.lang.ThreadLocal.get(ThreadLocal.java:193)
+    java.base/java.lang.ThreadLocal.get(ThreadLocal.java:171)
+    TraceLocals.lambda$main$0(TraceLocals.java:5)
+    java.base/java.lang.VirtualThread.run(VirtualThread.java:470)
+
+$ java diagnostics/WakeUps.java
+all served after 5414 ms; cards woken in each half second:
+   1.0- 1.5 s:   120,493
+   1.5- 2.0 s:   109,011
+   2.0- 2.5 s:   110,076
+   2.5- 3.0 s:   114,706
+   3.0- 3.5 s:   112,738
+   3.5- 4.0 s:   113,103
+   4.0- 4.5 s:   113,486
+   4.5- 5.0 s:   112,929
+   5.0- 5.5 s:    93,458
+CPU: 10 carrier threads 32949 ms in total, the delay scheduler thread 346 ms

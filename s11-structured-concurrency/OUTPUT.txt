@@ -1,0 +1,207 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java --enable-preview BestEffort.java
+join returned after 263 ms, cancelled? true
+  SUCCESS  berth S7-42
+  SUCCESS  fare 1250
+  UNAVAILABLE
+
+$ java --enable-preview BindingChanged.java
+Exception in thread "main" java.util.concurrent.StructureViolationException: Scoped value bindings have changed
+	at java.base/java.lang.Thread.inheritScopedValueBindings(Thread.java:389)
+	at java.base/java.lang.VirtualThread.start(VirtualThread.java:719)
+	at java.base/java.lang.System$1.start(System.java:2241)
+	at java.base/jdk.internal.misc.ThreadFlock.start(ThreadFlock.java:267)
+	at java.base/java.util.concurrent.StructuredTaskScopeImpl.fork(StructuredTaskScopeImpl.java:211)
+	at BindingChanged.lambda$main$2(BindingChanged.java:9)
+	at java.base/jdk.internal.vm.ScopedValueContainer.doRun(ScopedValueContainer.java:131)
+	at java.base/jdk.internal.vm.ScopedValueContainer.run(ScopedValueContainer.java:100)
+	at java.base/java.lang.ScopedValue$Carrier.run(ScopedValue.java:471)
+	at BindingChanged.lambda$main$0(BindingChanged.java:8)
+	at java.base/jdk.internal.vm.ScopedValueContainer.callWithoutScope(ScopedValueContainer.java:162)
+	at java.base/jdk.internal.vm.ScopedValueContainer.call(ScopedValueContainer.java:147)
+	at java.base/java.lang.ScopedValue$Carrier.call(ScopedValue.java:424)
+	at BindingChanged.main(BindingChanged.java:5)
+	Suppressed: java.lang.IllegalStateException: Owner did not join after forking
+		at java.base/java.util.concurrent.StructuredTaskScopeImpl.close(StructuredTaskScopeImpl.java:287)
+		at BindingChanged.lambda$main$0(BindingChanged.java:6)
+…
+
+$ java --enable-preview CardStates.java
+SUCCESS      berth S7-42
+FAILED       java.lang.IllegalStateException: fare service is down
+UNAVAILABLE
+UNAVAILABLE
+
+$ java --enable-preview Deadline.java
+fare lookup interrupted after 210 ms
+booking failed after 210 ms: java.util.concurrent.StructuredTaskScope$CancelledByTimeoutException
+seat lookup interrupted after 210 ms
+scope closed after 213 ms
+
+$ java --enable-preview DeafFork.java
+seat lookup was tapped after 64 ms, and kept going
+booking failed after 64 ms: fare service is down
+seat lookup finished after 1037 ms
+scope closed after 1037 ms
+
+$ java --enable-preview EveryAnswer.java
+ 213 ms  a clerk finished: platform 3
+ 255 ms  a clerk finished: fare 1250
+ 304 ms  a clerk finished: berth S7-42
+ 306 ms  join returned [berth S7-42, fare 1250, platform 3]
+
+$ java --enable-preview FirstServer.java
+ 215 ms  south server: answered
+ 236 ms  north server: told to stop
+ 236 ms  join returned: S7-42 from the south server
+ 236 ms  east server: told to stop
+ 236 ms  the try block is over
+
+$ java --enable-preview ForksInherit.java
+a fork in the scope reads:        Sophie
+a card on the virtual desk reads: (not bound)
+a thread started by hand reads:   (not bound)
+booking() returned Sophie; after the call, bound? false
+
+$ java --enable-preview MillionReaders.java local
+local: forked 1000000 after 607 ms
+local: heap in use after a GC while they slept: 1859 MB, fare tables made: 1000001, 6562 ms
+
+$ java OneCall.java
+ticket S7-42 for Sophie, bound? true
+after the call: bound? false, orElse: nobody
+Exception in thread "main" java.util.NoSuchElementException: ScopedValue not bound
+	at java.base/java.lang.ScopedValue.slowGet(ScopedValue.java:577)
+	at java.base/java.lang.ScopedValue.get(ScopedValue.java:570)
+	at OneCall.main(OneCall.java:7)
+
+$ java OneCardFails.java
+booking failed after 65 ms: fare service is down
+seat lookup finished after 1015 ms, for a booking that already failed
+desk closed after 1017 ms
+
+$ java Rebind.java
+booking for Sophie
+  a ticket for Ravi
+back to Sophie
+
+$ java --enable-preview WhenOneCardFails.java
+seat lookup interrupted after 64 ms
+booking failed after 64 ms: fare service is down
+scope closed after 65 ms
+
+$ java --enable-preview diagnostics/Booking21.java
+Note: diagnostics/Booking21.java uses preview features of Java SE 21.
+Note: Recompile with -Xlint:preview for details.
+seat lookup interrupted after 63 ms
+booking failed after 63 ms: fare service is down
+scope closed after 65 ms
+
+$ java --enable-preview diagnostics/Booking25.java
+seat lookup interrupted after 61 ms
+booking failed after 62 ms: fare service is down
+scope closed after 64 ms
+
+$ java --enable-preview diagnostics/BothCardsSucceed.java
+forked:     seat S7-42, fare $1250, after 307 ms
+one by one: seat S7-42, fare $1250, after 517 ms
+
+$ java --enable-preview diagnostics/CancelledStillReads.java
+seat lookup told to stop after 215 ms, still reads Sophie
+booking failed after 219 ms, real reason: java.lang.IllegalStateException: fare service is down
+
+$ java --enable-preview diagnostics/CardStatesAfterBrace.java
+meal card tapped after 215 ms, answering anyway
+after join:  [SUCCESS, FAILED, UNAVAILABLE, UNAVAILABLE]
+after brace: [SUCCESS, FAILED, UNAVAILABLE, UNAVAILABLE]
+
+$ java --enable-preview diagnostics/EveryServerDown.java
+ 305 ms  join threw ExecutionException, cause: java.lang.IllegalStateException: south server is down
+no servers: join threw ExecutionException, cause: java.util.NoSuchElementException: No subtasks completed
+
+$ java --enable-preview diagnostics/ForgotJoin.java
+forked, and walking away without join
+Exception in thread "main" java.lang.IllegalStateException: Owner did not join after forking
+	at java.base/java.util.concurrent.StructuredTaskScopeImpl.close(StructuredTaskScopeImpl.java:287)
+	at ForgotJoin.main(ForgotJoin.java:6)
+
+$ java --enable-preview diagnostics/ForkAfterJoin.java
+Exception in thread "main" java.lang.IllegalStateException: join already called or scope is closed
+	at java.base/java.util.concurrent.StructuredTaskScopeImpl.fork(StructuredTaskScopeImpl.java:189)
+	at ForkAfterJoin.main(ForkAfterJoin.java:6)
+
+$ java --enable-preview diagnostics/GetBeforeJoin.java
+Exception in thread "main" java.lang.IllegalStateException
+	at java.base/java.util.concurrent.StructuredTaskScopeImpl$SubtaskImpl.ensureJoinedIfNotSubtask(StructuredTaskScopeImpl.java:332)
+	at java.base/java.util.concurrent.StructuredTaskScopeImpl$SubtaskImpl.get(StructuredTaskScopeImpl.java:378)
+	at GetBeforeJoin.main(GetBeforeJoin.java:6)
+	Suppressed: java.lang.IllegalStateException: Owner did not join after forking
+		at java.base/java.util.concurrent.StructuredTaskScopeImpl.close(StructuredTaskScopeImpl.java:287)
+		at GetBeforeJoin.main(GetBeforeJoin.java:3)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:583)
+		at jdk.compiler/com.sun.tools.javac.launcher.SourceLauncher.execute(SourceLauncher.java:266)
+		at jdk.compiler/com.sun.tools.javac.launcher.SourceLauncher.run(SourceLauncher.java:139)
+		at jdk.compiler/com.sun.tools.javac.launcher.SourceLauncher.main(SourceLauncher.java:77)
+
+$ java diagnostics/InvokeAllFails.java
+seat lookup finished after 1010 ms, for a booking that already failed
+invokeAll returned after 1011 ms, fare slip: FAILED
+desk closed after 1014 ms
+
+$ java diagnostics/NoSetter.java
+diagnostics/NoSetter.java:5: error: cannot find symbol
+    ScopedValue.where(PASSENGER, "Sophie").run(() -> PASSENGER.set("Tom"));
+                                                              ^
+  symbol:   method set(String)
+  location: variable PASSENGER of type ScopedValue<String>
+1 error
+error: compilation failed
+
+$ java diagnostics/OneCardFailsByHand.java
+booking failed after 59 ms: fare service is down
+seat lookup interrupted after 60 ms
+desk closed after 60 ms
+
+$ java --enable-preview diagnostics/OneTornInEvery.java
+ 211 ms  a clerk finished: platform 3
+ 266 ms  told to stop: berth S7-42
+ 267 ms  join threw ExecutionException, cause: java.lang.IllegalStateException: fare 1250: service is down
+
+$ java --enable-preview diagnostics/OutOfOrder.java
+booking.close() threw: java.util.concurrent.StructureViolationException
+quotes cancelled? false
+
+$ java diagnostics/SeatFailsFirst.java
+booking failed after 1010 ms: no seat on this train
+desk closed after 1017 ms
+
+$ java --enable-preview diagnostics/SeatFailsFirstScope.java
+fare lookup interrupted after 64 ms
+booking failed after 64 ms: no seat on this train
+scope closed after 65 ms
+
+$ java diagnostics/SlipTimeout.java
+stopped waiting after 214 ms: java.util.concurrent.TimeoutException
+seat lookup finished after 1014 ms, long after the deadline
+desk closed after 1017 ms
+
+$ java diagnostics/ThreadLocalSet.java
+ticket S7-42 for Tom
+after the call: Tom
+
+$ java --enable-preview diagnostics/WhoForked.java
+owner: Thread[#3,main,5,main]
+seat card on VirtualThread[#35]/runnable@ForkJoinPool-1-worker-1, virtual? true
+fare card on VirtualThread[#37]/runnable@ForkJoinPool-1-worker-2, virtual? true
+
+$ java --enable-preview diagnostics/WrongState.java
+seat: SUCCESS, fare: FAILED
+fare.get() threw: java.lang.IllegalStateException: Result is unavailable or subtask did not complete successfully
+seat.exception() threw: java.lang.IllegalStateException: Exception is unavailable or subtask did not complete with exception
+
+$ java --enable-preview diagnostics/WrongThread.java
+helper's fork threw: java.lang.WrongThreadException: Current thread not owner
+the owner's join still works

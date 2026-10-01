@@ -1,0 +1,99 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java Blocked.java
+window-1 : TIMED_WAITING
+window-2 : BLOCKED
+window-3 : BLOCKED
+window-4 : BLOCKED
+window-5 : BLOCKED
+window-6 : BLOCKED
+window-7 : BLOCKED
+window-8 : BLOCKED
+window-9 : BLOCKED
+window-10 : BLOCKED
+
+$ java LockInt.java
+LockInt.java:6: error: unexpected type
+    synchronized (ticketsSold) {                   // lock the number itself?
+    ^
+  required: reference
+  found:    int
+1 error
+error: compilation failed
+
+$ java LockInteger.java
+LockInteger.java:4: warning: [identity] attempt to synchronize on an instance of a value-based class
+    synchronized (ticketsSold) {
+    ^
+1 warning
+register says 1
+
+$ java NapFirst.java
+2 tickets sold, register says 2
+
+$ java NullDesk.java
+Exception in thread "window-1" java.lang.NullPointerException: Cannot enter synchronized block because "NullDesk.DESK" is null
+	at NullDesk.sell(NullDesk.java:8)
+	at NullDesk$BookingClerk.run(NullDesk.java:17)
+	at java.base/java.lang.Thread.run(Thread.java:1527)
+Exception in thread "window-8" java.lang.NullPointerException: Cannot enter synchronized block because "NullDesk.DESK" is null
+	at NullDesk.sell(NullDesk.java:8)
+	at NullDesk$BookingClerk.run(NullDesk.java:17)
+	at java.base/java.lang.Thread.run(Thread.java:1527)
+Exception in thread "window-5" java.lang.NullPointerException: Cannot enter synchronized block because "NullDesk.DESK" is null
+	at NullDesk.sell(NullDesk.java:8)
+	at NullDesk$BookingClerk.run(NullDesk.java:17)
+	at java.base/java.lang.Thread.run(Thread.java:1527)
+Exception in thread "window-2" java.lang.NullPointerException: Cannot enter synchronized block because "NullDesk.DESK" is null
+	at NullDesk.sell(NullDesk.java:8)
+
+$ java SellRefund.java
+5 x 100000 sold, 5 x 100000 refunded, register says 1806
+
+$ java SellRefundSameKey.java
+5 x 100000 sold, 5 x 100000 refunded, register says 0
+
+$ java SlowMotion.java
+Meena reads  0
+Tom reads  0
+Tom writes 1
+Meena writes 1
+2 tickets sold, register says 1
+
+$ java SlowMotionSync.java
+Meena reads  0
+Meena writes 1
+Tom reads  1
+Tom writes 2
+2 tickets sold, register says 2
+
+$ java TicketCounter.java
+expected : 1000000
+register : 250274
+time     : 7 ms
+
+$ java TicketDesk.java
+expected : 1000000
+register : 1000000
+time     : 34 ms
+
+$ java TicketNewObject.java
+expected : 1000000
+register : 301552
+time     : 45 ms
+
+$ java TicketSync.java
+expected : 1000000
+register : 1000000
+time     : 34 ms
+
+$ java TicketSyncRun.java
+expected : 1000000
+register : 168629
+time     : 4 ms
+
+$ java TicketVolatile.java
+expected : 1000000
+register : 186169
+time     : 70 ms

@@ -1,0 +1,85 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java Hatch.java
+Meena: tray empty, waiting
+printer: printed slip #1   (tray 1)
+Meena: took slip #1   (tray 0)
+printer: printed slip #2   (tray 1)
+printer: printed slip #3   (tray 2)
+Meena: took slip #2   (tray 1)
+printer: printed slip #4   (tray 2)
+printer: printed slip #5   (tray 3)
+printer: tray full, waiting
+Meena: took slip #3   (tray 2)
+printer: printed slip #6   (tray 3)
+Meena: took slip #4   (tray 2)
+Meena: took slip #5   (tray 1)
+Meena: took slip #6   (tray 0)
+shutters down, tray = []
+
+$ java HatchIf.java
+Meena: tray empty, waiting
+Tom: tray empty, waiting
+printer: printed slip #1   (tray 1)
+Meena: took slip #1   (tray 0)
+Exception in thread "Tom" java.util.NoSuchElementException
+	at java.base/java.util.ArrayDeque.removeFirst(ArrayDeque.java:360)
+	at java.base/java.util.ArrayDeque.remove(ArrayDeque.java:521)
+	at HatchIf.collect(HatchIf.java:23)
+	at HatchIf.lambda$main$1(HatchIf.java:44)
+	at java.base/java.lang.Thread.run(Thread.java:1527)
+printer: printed slip #2   (tray 1)
+printer: printed slip #3   (tray 2)
+Meena: took slip #2   (tray 1)
+printer: printed slip #4   (tray 2)
+printer: printed slip #5   (tray 3)
+printer: tray full, waiting
+Meena: took slip #3   (tray 2)
+printer: printed slip #6   (tray 3)
+…
+
+$ java LockHold.java
+sleep(1000): main got in after 900 ms
+wait(1000) : main got in after 0 ms
+
+$ java Monitor1.java
+Exception in thread "main" java.lang.IllegalMonitorStateException: current thread is not owner
+	at java.base/java.lang.Object.wait0(Native Method)
+	at java.base/java.lang.Object.wait(Object.java:391)
+	at java.base/java.lang.Object.wait(Object.java:353)
+	at Monitor1.main(Monitor1.java:3)
+
+$ java NotifyStall.java
+Meena: tray empty, waiting
+Tom: tray empty, waiting
+printer: printed slip #1   (tray 1)
+Meena: took slip #1   (tray 0)
+Tom: tray empty, waiting
+printer: printed slip #2   (tray 1)
+Tom: took slip #2   (tray 0)
+printer: printed slip #3   (tray 1)
+Meena: took slip #3   (tray 0)
+printer: printed slip #4   (tray 1)
+Tom: took slip #4   (tray 0)
+printer: printed slip #5   (tray 1)
+printer: tray full, waiting
+Meena: took slip #5   (tray 0)
+printer: printed slip #6   (tray 1)
+Tom: took slip #6   (tray 0)
+shutters down, tray = []
+
+$ java Spin.java
+Meena got slip #1 after 263,206,929 checks
+
+$ java Waiting.java
+Meena (called wait)          : WAITING
+Ravi  (sleeping with the key): TIMED_WAITING
+Tom   (wants the key)        : BLOCKED
+
+$ java WrongObject.java
+Exception in thread "main" java.lang.IllegalMonitorStateException: current thread is not owner
+	at java.base/java.lang.Object.wait0(Native Method)
+	at java.base/java.lang.Object.wait(Object.java:391)
+	at java.base/java.lang.Object.wait(Object.java:353)
+	at WrongObject.main(WrongObject.java:5)

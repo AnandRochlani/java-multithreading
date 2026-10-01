@@ -1,0 +1,210 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java CasRetries.java
+register        : 1000000
+compareAndSet said no 5509370 times, and each time the clerk read again and retried
+
+$ java CopyCost.java
+round 1: ArrayList 3 ms, CopyOnWriteArrayList 498 ms, for 50000 adds each
+round 2: ArrayList 0 ms, CopyOnWriteArrayList 195 ms, for 50000 adds each
+round 3: ArrayList 0 ms, CopyOnWriteArrayList 182 ms, for 50000 adds each
+
+$ java CountTheRegister.java
+the slips say  : 100000 bookings written
+the register has: 33553 bookings
+counted by hand : 99244 bookings
+found by lookup : 99244 of 100000
+
+$ java Destinations.java
+northbound :  9,938
+southbound : 10,580
+eastbound  : 14,022
+westbound  : 13,242
+counted    : 47,782 of 100,000 bookings
+
+$ java DestinationsMerge.java
+northbound : 25,000
+southbound : 25,000
+eastbound  : 25,000
+westbound  : 25,000
+counted    : 100,000 of 100,000 bookings
+
+$ java FixedRegister.java
+the slips say  : 100000 bookings written
+the register has: 100000 bookings
+
+$ java HatchQueue.java
+printer: printed slip #1
+Meena: took slip #1, after take waited 55 ms at an empty tray
+printer: printed slip #2
+printer: printed slip #3
+Meena: took slip #2
+printer: printed slip #4
+printer: printed slip #5
+printer: printed slip #6
+Meena: took slip #3
+printer: the tray was full, so put waited 38 ms
+Meena: took slip #4
+Meena: took slip #5
+Meena: took slip #6
+shutters down, tray = []
+
+$ java ReaderCHM.java
+reader finished after 42 passes
+fares in the map: 200000
+
+$ java ReaderCrash.java
+reader threw: java.util.ConcurrentModificationException
+fares in the map: 200000
+
+$ java ReaderSyncMap.java
+reader threw: java.util.ConcurrentModificationException
+fares in the map: 200000
+
+$ java Register.java
+bookings in the rack: 100000
+tickets sold        : 100000
+
+$ java RegisterCrash.java
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+a slip threw: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+the slips say  : 0 bookings written
+the register has: 10848 bookings
+the first one, in full: java.lang.ClassCastException: class java.util.HashMap$Node cannot be cast to class java.util.HashMap$TreeNode (java.util.HashMap$Node and java.util.HashMap$TreeNode are in module java.base of loader 'bootstrap')
+	at java.base/java.util.HashMap$TreeNode.moveRootToFront(HashMap.java:2020)
+	at java.base/java.util.HashMap$TreeNode.treeify(HashMap.java:2136)
+	at java.base/java.util.HashMap$TreeNode.split(HashMap.java:2365)
+	at java.base/java.util.HashMap.resize(HashMap.java:746)
+	at java.base/java.util.HashMap.putVal(HashMap.java:695)
+…
+
+$ java SeatChart.java
+pool-1-thread-2: building the seat chart for coach S7
+pool-1-thread-1: building the seat chart for coach S7
+pool-1-thread-10: building the seat chart for coach S7
+pool-1-thread-8: building the seat chart for coach S7
+pool-1-thread-9: building the seat chart for coach S7
+pool-1-thread-4: building the seat chart for coach S7
+pool-1-thread-3: building the seat chart for coach S7
+pool-1-thread-5: building the seat chart for coach S7
+pool-1-thread-6: building the seat chart for coach S7
+pool-1-thread-7: building the seat chart for coach S7
+different charts handed out: 10
+
+$ java SeatChartOnce.java
+pool-1-thread-4: building the seat chart for coach S7
+different charts handed out: 1
+
+$ java SharedRegister.java
+the slips say  : 100000 bookings written
+the register has: 56290 bookings
+
+$ java SnapshotLoop.java
+ArrayList           : java.util.ConcurrentModificationException
+CopyOnWriteArrayList: the walk visited 3, the list now holds 6
+                      [board-1, board-2, board-3, board-1-new, board-2-new, board-3-new]
+
+$ java StallQueue.java
+shutters down: 6 of 6 slips taken, tray = []
+printer: TERMINATED
+Meena: TERMINATED
+Tom: TERMINATED
+
+$ java SyncRegister.java
+the slips say  : 100000 bookings written
+the register has: 100000 bookings
+
+$ java TicketAdder.java
+expected : 1000000
+register : 1000000
+time     : 35 ms
+
+$ java TicketAtomic.java
+expected : 1000000
+register : 1000000
+time     : 43 ms
+
+$ java TrayMethods.java
+add on a full tray throws     : java.lang.IllegalStateException: Queue full
+offer on a full tray returns  : false
+offer, waiting 100 ms, returns: false after 105 ms
+put on a full tray, 100 ms on : the printer is WAITING
+Meena takes                   : slip #1
+and the printer's put is done : tray = [slip #2]
+remove on an empty tray throws: java.util.NoSuchElementException
+poll on an empty tray returns : null
+poll, waiting 100 ms, returns : null after 105 ms
+
+$ java --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED diagnostics/AdderCells.java
+   10 clerks: sum 1,000,000, cells 16 (in use 14), cores 10
+  100 clerks: sum 1,000,000, cells 16 (in use 16), cores 10
+1,000 clerks: sum 1,000,000, cells 4 (in use 4), cores 10
+
+$ java diagnostics/DestinationsLocked.java
+northbound : 25,000
+southbound : 25,000
+eastbound  : 25,000
+westbound  : 25,000
+counted    : 100,000 of 100,000 bookings
+
+$ java diagnostics/NullInCHM.java
+HashMap takes a null value: {S7-42=null}
+ConcurrentHashMap refuses it: java.lang.NullPointerException
+
+$ java diagnostics/ReaderSyncMapLocked.java
+after 1 s: 852 of 200000 fares written, Tom has walked the map 321853 times, no exception
+after 2 s: 908 of 200000 fares written, Tom has walked the map 558143 times, no exception
+after 3 s: 1264 of 200000 fares written, Tom has walked the map 755972 times, no exception
+Meena: BLOCKED, Tom: RUNNABLE
+
+$ java diagnostics/RecursiveUpdate.java
+computeIfAbsent inside computeIfAbsent: java.lang.IllegalStateException: Recursive update
+
+$ java diagnostics/ShuttersUp.java
+ 108 ms  Meena is at the window
+ 208 ms  Tom is at the window
+ 308 ms  Kavya is at the window
+ 308 ms  station master: all three in, shutters up
+
+$ java diagnostics/SoloCME.java
+the loop visits them in this order: [booking-2, booking-3, booking-1, booking-4, booking-5]
+removing booking-3 mid-loop threw: java.util.ConcurrentModificationException
+removed booking-5 (the last key) mid-loop: no exception, map now [booking-2, booking-1, booking-4]
+
+$ java diagnostics/StateSampler.java sync
+synchronized : count 20000000 in 231 ms; 44487066 looks at a live clerk: {RUNNABLE=9460016, BLOCKED=35027050}
+
+$ java diagnostics/ThreeAtATime.java
+ten passengers served, never more than 3 at the windows at once
+
+$ java diagnostics/TreeCount.java
+ten clerks : size() says 49897, nodes reachable 73877, distinct keys 73877, buckets 524288, tree buckets 0 (tree nodes 0), longest chain 4
+one thread : size() says 100000, nodes reachable 100000, distinct keys 100000, buckets 262144, tree buckets 0 (tree nodes 0), longest chain 5
+
+$ java diagnostics/WarmCounters.java
+round  1: synchronized  18 ms (1000000), AtomicInteger  28 ms (1000000), LongAdder  23 ms (1000000)
+round  2: synchronized  28 ms (1000000), AtomicInteger  35 ms (1000000), LongAdder   1 ms (1000000)
+round  3: synchronized  21 ms (1000000), AtomicInteger  32 ms (1000000), LongAdder   0 ms (1000000)
+round  4: synchronized  20 ms (1000000), AtomicInteger  34 ms (1000000), LongAdder   0 ms (1000000)
+round  5: synchronized  25 ms (1000000), AtomicInteger  32 ms (1000000), LongAdder   0 ms (1000000)
+round  6: synchronized  23 ms (1000000), AtomicInteger  34 ms (1000000), LongAdder   0 ms (1000000)
+round  7: synchronized  29 ms (1000000), AtomicInteger  33 ms (1000000), LongAdder   1 ms (1000000)
+round  8: synchronized  24 ms (1000000), AtomicInteger  33 ms (1000000), LongAdder   0 ms (1000000)
+round  9: synchronized  28 ms (1000000), AtomicInteger  34 ms (1000000), LongAdder   0 ms (1000000)
+round 10: synchronized  26 ms (1000000), AtomicInteger  34 ms (1000000), LongAdder   0 ms (1000000)
+round 11: synchronized  25 ms (1000000), AtomicInteger  33 ms (1000000), LongAdder   1 ms (1000000)
+round 12: synchronized  34 ms (1000000), AtomicInteger  31 ms (1000000), LongAdder   1 ms (1000000)
+
+$ java diagnostics/WarmOverlap.java
+round  1: sync 17413/16579/10 | atomic 24745/24603/10 | adderKept 20810/20690/10 | adderFresh 3570/3393/10 | counts 1000000 1000000 1000000 1000000
+round  2: sync 22431/22293/10 | atomic 36739/36627/10 | adderKept 951/794/10 | adderFresh 979/858/10 | counts 1000000 1000000 1000000 1000000
+round 12: sync 23423/23335/10 | atomic 36521/36430/10 | adderKept 1012/865/10 | adderFresh 1020/852/10 | counts 1000000 1000000 1000000 1000000

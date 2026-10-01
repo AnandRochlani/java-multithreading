@@ -1,0 +1,61 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java Cores.java
+10
+
+$ java Ideal.java
+one clerk    : 6000 ms
+three clerks : 2000 ms
+
+$ java Ledger.java   # re-captured 28 Sep after Upi -> Phone, dollars and generic bank names: 71 runs, elapsed 1618-1634 ms; this is the 1624 run
+PHONE priya  $250              fee $  0.00
+CARD BANK A ****4321  $1299    fee $ 25.98
+CASH  $150                     fee $  0.00
+PHONE daniel  $49              fee $  0.00
+CARD BANK B ****1111  $2500    fee $ 50.00
+TOTAL                             $4248.00
+FEES                              $  75.98
+
+$ java Nap.java
+Nap.java:3: error: unreported exception InterruptedException; must be caught or declared to be thrown
+    Thread.sleep(2000);
+                ^
+1 error
+error: compilation failed
+
+$ java NapDeclared.java
+before
+after
+
+$ java Pid.java
+process id : 59114
+thread     : main
+
+$ java Station.java
+sold 3 tickets
+chai is ready
+day report printed
+station closed in 6022 ms
+
+$ java Station2.java
+[main] selling 3 tickets
+sold 3 tickets
+[main] brewing chai
+chai is ready
+[main] printing the report
+day report printed
+station closed in 6030 ms
+
+$ java Waste.java
+cores : 10
+used  : 1
+idle  : 90%
+
+$ java Who.java
+Common-Cleaner
+Finalizer
+Notification Thread
+Reference Handler
+Signal Dispatcher
+main

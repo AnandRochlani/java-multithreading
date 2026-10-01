@@ -1,0 +1,208 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java AnswerHole.java
+AnswerHole.java:3: error: incompatible types: bad return type in lambda expression
+        return "S7-42";                                           // coach S7, berth 42
+               ^
+    unexpected return value
+1 error
+error: compilation failed
+
+$ java CatchWhatYouExpect.java
+card 1 served by pool-1-thread-1
+slip 1: get returned null
+card 3 served by pool-1-thread-1
+card 4 served by pool-1-thread-1
+Exception in thread "main" java.util.concurrent.ExecutionException: java.lang.IllegalStateException: card 2 is torn
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+	at CatchWhatYouExpect.main(CatchWhatYouExpect.java:14)
+Caused by: java.lang.IllegalStateException: card 2 is torn
+	at CatchWhatYouExpect.lambda$main$0(CatchWhatYouExpect.java:8)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:330)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1527)
+
+$ java ClaimSlip.java
+   0 ms  isDone? false
+ 115 ms  stopped waiting: java.util.concurrent.TimeoutException
+ 115 ms  isDone? false
+ 312 ms  get returned S7-42, isDone? true
+
+$ java DeafSlip.java
+ 111 ms  main: cancel returned true, state CANCELLED
+ 117 ms  main: get threw java.util.concurrent.CancellationException
+1000 ms  clerk: finished anyway, was I tapped? true
+1001 ms  main: the try block is over
+
+$ java FirstAnswer.java
+ 215 ms  south server: answered
+ 232 ms  invokeAny returned: S7-42 from the south server
+ 232 ms  north server: told to stop
+ 232 ms  east server: told to stop
+ 232 ms  the try block is over
+
+$ java GetTwice.java
+get number 1: S7-42 after 310 ms
+get number 2: S7-42 after 0 ms
+get number 3: S7-42 after 0 ms
+torn slip, presented twice: the same envelope? false, the same exception inside? true
+
+$ java KeptSlips.java
+card 1 served by pool-1-thread-1
+card 3 served by pool-1-thread-1
+card 4 served by pool-1-thread-1
+slip 1: java.util.concurrent.FutureTask@29176cc1[Completed normally]
+slip 2: java.util.concurrent.FutureTask@2f177a4b[Completed exceptionally: java.lang.IllegalStateException: card 2 is torn]
+slip 3: java.util.concurrent.FutureTask@4278a03f[Completed normally]
+slip 4: java.util.concurrent.FutureTask@147ed70f[Completed normally]
+
+$ java NoAnswer.java
+form handed in, waiting for the fare
+
+$ java OneTornInAll.java
+invokeAll returned 3 slips
+slip 1: berth S7-42
+slip 2: java.lang.IllegalStateException: card 2 is torn
+slip 3: platform 3
+
+$ java OneWord.java
+berth S7-42, served by a card that answered
+
+$ java ParkedMain.java
+100 ms in, main is WAITING
+    at java.base/java.util.concurrent.FutureTask.awaitDone(FutureTask.java:513)
+    at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:192)
+main got S7-42
+
+$ java PeekSlip.java
+RUNNING    isDone false  nothing yet
+SUCCESS    isDone true   answer S7-42
+FAILED     isDone true   exception java.lang.IllegalStateException: card 2 is torn
+CANCELLED  isDone true   torn up
+resultNow too early: java.lang.IllegalStateException: Task has not completed
+
+$ java PollDone.java
+asking isDone in a loop: 1,140,360,718 checks, 307 ms of CPU in 307 ms
+presenting the slip:      0 ms of CPU in 310 ms
+
+$ java PresentSlip.java
+card 1 served by pool-1-thread-1
+slip 1: get returned null
+slip 2: get threw java.util.concurrent.ExecutionException: java.lang.IllegalStateException: card 2 is torn
+        and inside it: java.lang.IllegalStateException: card 2 is torn
+card 3 served by pool-1-thread-1
+slip 3: get returned null
+card 4 served by pool-1-thread-1
+slip 4: get returned null
+
+$ java SeatQuote.java
+both forms handed in after 1 ms
+berth S7-42, fare 1250, after 311 ms
+
+$ java SeatQuoteSlow.java
+both forms handed in after 312 ms
+berth S7-42, fare 1250, after 518 ms
+
+$ java SharedRegister.java
+the slips say  : 100000 bookings written
+the register has: 46486 bookings
+
+$ java SilentCard.java
+card 1 served by pool-1-thread-1
+card 3 served by pool-1-thread-1
+card 4 served by pool-1-thread-1
+
+$ java SleepHole.java
+SleepHole.java:3: error: unreported exception InterruptedException; must be caught or declared to be thrown
+        Thread.sleep(300);                                        // the seat system takes a while
+                    ^
+1 error
+error: compilation failed
+
+$ java SlipsNotClerks.java
+8 lookups of 100 ms on 2 clerks took 424 ms
+
+$ java TallyByCard.java
+expected : 1000000
+register : 1000000
+time     : 4 ms
+
+$ java TearUp.java
+1010 ms  clerk: tapped on the shoulder, stopping
+1010 ms  main: cancel returned true, isCancelled true, isDone true
+1024 ms  main: presenting it now throws java.util.concurrent.CancellationException
+1025 ms  main: cancel a finished slip? false
+
+$ java ThreeWindows.java
+ 211 ms  a clerk finished: platform 3
+ 261 ms  a clerk finished: fare 1250
+ 311 ms  a clerk finished: berth S7-42
+ 312 ms  invokeAll returned 3 slips
+ 314 ms    berth S7-42
+ 314 ms    fare 1250
+ 314 ms    platform 3
+
+$ java diagnostics/CallMeBack.java
+   2 ms  main: not waiting, not polling
+ 303 ms  callback on pool-1-thread-1: berth S7-42
+main: returning without waiting for the common-pool card, daemon? true
+
+$ java diagnostics/CancelFalse.java
+ 113 ms  main: cancel(false) returned true, state CANCELLED
+         main: get threw java.util.concurrent.CancellationException
+ 312 ms  clerk: finished the lookup anyway
+ 313 ms  main: the try block is over
+
+$ java diagnostics/CatchNoThrows.java
+CatchNoThrows.java:14: error: unreported exception ExecutionException; must be caught or declared to be thrown
+                Object answer = slips.get(n - 1).get();           // present the slip, and wait if you must
+                                                    ^
+1 error
+error: compilation failed
+
+$ java diagnostics/FirstAnswerQuiet.java
+answered 212.2 ms, invokeAny returned 212.9 ms, a loser stopped 213.0 ms, closed 213.3 ms: south
+
+$ java diagnostics/FirstFails.java
+ 262 ms  invokeAny returned: S7-42 from the east server
+ 588 ms  every server failed: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: north server is down
+
+$ java diagnostics/InvokeAllTimeout.java
+ 271 ms  invokeAll(260 ms) returned
+         CANCELLED
+         SUCCESS  fare 1250
+         SUCCESS  platform 3
+
+$ java diagnostics/OneHoleAtATime.java
+OneHoleAtATime.java:3: error: incompatible types: bad return type in lambda expression
+        return "S7-42";
+               ^
+    unexpected return value
+1 error
+error: compilation failed
+
+$ java diagnostics/SleepHoleCallable.java
+SleepHoleCallable.java:2: error: incompatible types: bad return type in lambda expression
+    Callable<String> seatFinder = () -> {                         // one word changed, but nothing is returned
+                                  ^
+    missing return value
+1 error
+error: compilation failed
+
+$ java diagnostics/TimedGetOvershoot.java
+first timeout (cold): 110.2 ms
+next 20 timeouts: shortest 101.3 ms, longest 110.2 ms, average 107.1 ms
+
+$ java diagnostics/WarmPool.java
+Thread.sleep(300) alone, 5 times: average 305.6 ms, longest 310.1 ms
+Thread.sleep(200) alone, 5 times: average 206.0 ms, longest 210.0 ms
+pool created in 1.33 ms
+round 1 (clerks hired now): 311.0 ms
+round 2 (same two clerks): 310.4 ms
+round 3 (same two clerks): 301.7 ms
+round 4 (same two clerks): 308.9 ms
+round 5 (same two clerks): 310.2 ms

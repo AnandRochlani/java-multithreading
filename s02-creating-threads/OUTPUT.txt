@@ -1,0 +1,85 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java Counter.java
+counter closed: 0 tickets sold today, in 1 ms
+window-1 sold ticket 1   [Meena]
+window-2 sold ticket 1   [Tom]
+window-3 sold ticket 1   [Kavya]
+window-3 sold ticket 2   [Kavya]
+window-1 sold ticket 2   [Meena]
+window-2 sold ticket 2   [Tom]
+window-1 sold ticket 3   [Meena]
+window-2 sold ticket 3   [Tom]
+window-3 sold ticket 3   [Kavya]
+
+$ java CounterRun.java
+window-1 sold ticket 1   [main]
+window-1 sold ticket 2   [main]
+window-1 sold ticket 3   [main]
+window-2 sold ticket 1   [main]
+window-2 sold ticket 2   [main]
+window-2 sold ticket 3   [main]
+window-3 sold ticket 1   [main]
+window-3 sold ticket 2   [main]
+window-3 sold ticket 3   [main]
+counter closed: 9 tickets sold today, in 6375 ms
+
+$ java DaemonOff.java
+main is done
+Tom finished the late shift
+
+$ java DaemonOn.java
+main is done
+
+$ java DefaultNames.java
+I am Thread-0
+I am Thread-1
+I am Thread-2
+
+$ java ExtendsThread.java
+window-1 is selling tickets
+window-2 is selling tickets
+
+$ java HelloRunnable.java
+main carries on
+hello from Thread-0
+
+$ java LambdaClerks.java
+window-2 sold ticket 1
+window-1 sold ticket 1
+window-2 sold ticket 2
+window-1 sold ticket 2
+
+$ java LambdaReassign.java
+LambdaReassign.java:3: error: local variables referenced from a lambda expression must be final or effectively final
+    return () -> IO.println(window + " sold a ticket");
+                            ^
+1 error
+error: compilation failed
+
+$ java NamedThreads.java
+I am window-1
+I am window-2
+I am window-3
+
+$ java SleepyJob.java
+SleepyJob.java:3: error: unreported exception InterruptedException; must be caught or declared to be thrown
+        Thread.sleep(700);
+                    ^
+1 error
+error: compilation failed
+
+$ java StartTwice.java
+Tom opens window 2
+Exception in thread "main" java.lang.IllegalThreadStateException
+	at java.base/java.lang.Thread.start(Thread.java:1469)
+	at StartTwice.main(StartTwice.java:4)
+
+$ java StationThreads.java
+day report printed at 2011 ms
+chai is ready      at 2011 ms
+sold 3 tickets     at 2011 ms
+
+$ java ThreadIsRunnable.java
+run by window-1

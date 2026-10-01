@@ -1,0 +1,94 @@
+# Output captured on the instructor's machine: JDK 27 (openjdk version "27" 2026-09-15), 10-core Apple silicon Mac, 16 GB.
+# Your timings, thread names and print order will differ. Programs that hang on purpose show no output here: press Ctrl+C.
+
+$ java CounterJoined.java
+window-1 sold ticket 1   [Meena]
+window-3 sold ticket 1   [Kavya]
+window-2 sold ticket 1   [Tom]
+window-1 sold ticket 2   [Meena]
+window-2 sold ticket 2   [Tom]
+window-3 sold ticket 2   [Kavya]
+window-1 sold ticket 3   [Meena]
+window-2 sold ticket 3   [Tom]
+window-3 sold ticket 3   [Kavya]
+counter closed: 7 tickets sold today, in 2122 ms
+
+$ java CounterWrongJoin.java
+window-1 sold ticket 1   [Meena]
+window-1 sold ticket 2   [Meena]
+window-1 sold ticket 3   [Meena]
+window-2 sold ticket 1   [Tom]
+window-2 sold ticket 2   [Tom]
+window-2 sold ticket 3   [Tom]
+window-3 sold ticket 1   [Kavya]
+window-3 sold ticket 2   [Kavya]
+window-3 sold ticket 3   [Kavya]
+counter closed: 9 tickets sold today, in 6344 ms
+
+$ java Gate.java
+Tom finished the work at 306 ms
+Kavya finished the work at 606 ms
+Meena finished the work at 906 ms
+  gate: Meena signed out at 906 ms
+  gate: Tom signed out at 908 ms
+  gate: Kavya signed out at 908 ms
+
+$ java Gotcha.java
+join returned after 0 ms
+window-9 is NEW
+
+$ java IgnoreTap.java
+Tom: tapped on the shoulder, ignoring it
+Tom: still selling, round 1
+Tom: still selling, round 2
+Tom: still selling, round 3
+
+$ java JoinDuration.java
+Tom finished within 500 ms? false (Tom is TIMED_WAITING)
+
+$ java JoinState.java
+plain join  -> WAITING
+join(1500)  -> TIMED_WAITING
+worker      -> TIMED_WAITING
+
+$ java NegativeSleep.java
+Exception in thread "main" java.lang.IllegalArgumentException: timeout value is negative
+	at java.base/java.lang.Thread.sleep(Thread.java:590)
+	at NegativeSleep.main(NegativeSleep.java:3)
+
+$ java Shift.java
+hired         : NEW
+just started  : RUNNABLE
+mid-break     : TIMED_WAITING
+after join    : TERMINATED
+still alive?  : false
+Exception in thread "main" java.lang.IllegalThreadStateException
+	at java.base/java.lang.Thread.start(Thread.java:1469)
+	at Shift.main(Shift.java:13)
+
+$ java SleepOther.java
+main slept for 1005 ms; Tom is NEW
+
+$ java States.java
+0  NEW
+1  RUNNABLE
+2  BLOCKED
+3  WAITING
+4  TIMED_WAITING
+5  TERMINATED
+
+$ java StopGone.java
+StopGone.java:4: error: cannot find symbol
+    tom.stop();                    // the old stop button
+       ^
+  symbol:   method stop()
+  location: variable tom of type Thread
+1 error
+error: compilation failed
+
+$ java TeaBreak.java
+Meena caught: java.lang.InterruptedException: sleep interrupted
+message     : sleep interrupted
+flag now    : false
+flag put back: true
+shift ended after 507 ms, Meena is TERMINATED
